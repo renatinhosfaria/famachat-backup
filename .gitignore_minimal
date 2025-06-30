@@ -1,0 +1,43 @@
+# Minimal .gitignore for backup - only essential files
+# Large folders that will be recreated
+node_modules/
+dist/
+uploads/
+attached_assets/
+logs/
+public/empreendimentos/
+server/uploads/
+
+# Build outputs
+build/
+.next/
+.nuxt/
+.vite/
+
+# Environment and config (keep structure but exclude sensitive data)
+.env
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Database files
+*.sqlite
+*.sqlite3
+*.db
+dump.rdb
+
+# Backup files
+*.backup
+*.bak
