@@ -1,0 +1,134 @@
+            <CardFooter className="flex justify-between">
+              <Button
+                variant="outline"
+                onClick={() => setActiveTab("instances")}
+                className="mr-auto"
+              >
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Voltar para Instâncias
+              </Button>
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    // Implementação para obter configuração atual
+                    if (!form.watch("webhookInstance")) {
+                      toast({
+                        title: "Selecione uma instância",
+                        description: "É necessário selecionar uma instância para obter a configuração.",
+                        variant: "destructive",
+                      });
+                      return;
+                    }
+                    
+                    toast({
+                      title: "Obtendo configuração",
+                      description: `Buscando configuração atual para ${form.watch("webhookInstance")}`,
+                    });
+                    
+                    apiRequest({
+                      url: `/api/whatsapp/webhook/config/${form.watch("webhookInstance")}`,
+                      method: "GET",
+                    })
+                    .then((data) => {
+                      toast({
+                        title: "Configuração carregada",
+                        description: "Configuração atual obtida com sucesso.",
+                      });
+                      // Aqui você pode preencher o formulário com os dados recebidos
+                    })
+                    .catch((error) => {
+                      toast({
+                        title: "Erro ao obter configuração",
+                        description: "Não foi possível obter a configuração atual.",
+                        variant: "destructive",
+                      });
+                    });
+                  }}
+                >
+                  <RefreshCw className="h-4 w-4 mr-2" />
+                  Obter Configuração Atual
+                </Button>
+                <Button
+                  onClick={() => {
+                    // Validar se a instância está selecionada
+                    if (!form.watch("webhookInstance")) {
+                      toast({
+                        title: "Selecione uma instância",
+                        description: "É necessário selecionar uma instância para salvar a configuração.",
+                        variant: "destructive",
+                      });
+                      return;
+                    }
+                    
+                    // Implementação para salvar configuração
+                    toast({
+                      title: "Salvando configuração",
+                      description: `Salvando configuração para ${form.watch("webhookInstance")}`,
+                    });
+                    
+                    // Obter todos os eventos selecionados
+                    const selectedEvents = [
+                      'APPLICATION_STARTUP',
+                      'CALL',
+                      'CHATS_DELETE',
+                      'CHATS_SET',
+                      'CHATS_UPDATE',
+                      'CHATS_UPSERT',
+                      'CONNECTION_UPDATE',
+                      'CONTACTS_SET',
+                      'CONTACTS_UPDATE',
+                      'CONTACTS_UPSERT',
+                      'GROUP_PARTICIPANTS_UPDATE',
+                      'GROUP_UPDATE',
+                      'GROUPS_UPSERT',
+                      'LABELS_ASSOCIATION',
+                      'LABELS_EDIT',
+                      'LOGOUT_INSTANCE',
+                      'MESSAGES_DELETE',
+                      'MESSAGES_SET',
+                      'MESSAGES_UPDATE',
+                      'MESSAGES_UPSERT',
+                      'PRESENCE_UPDATE',
+                      'QRCODE_UPDATED',
+                      'REMOVE_INSTANCE',
+                      'SEND_MESSAGE',
+                      'TYPEBOT_CHANGE_STATUS',
+                      'TYPEBOT_START'
+                    ].filter(event => 
+                      document.getElementById(`event-${event}`)?.checked
+                    );
+                    
+                    apiRequest({
+                      url: `/api/whatsapp/webhook/config`,
+                      method: "POST",
+                      data: {
+                        instance: form.watch("webhookInstance"),
+                        url: form.watch("webhookUrl"),
+                        events: selectedEvents,
+                        options: {
+                          base64: document.getElementById("option-base64")?.checked || false,
+                          onlyEvents: document.getElementById("option-onlyevents")?.checked || false
+                        }
+                      }
+                    })
+                    .then((data) => {
+                      toast({
+                        title: "Configuração salva",
+                        description: "Configuração do webhook salva com sucesso.",
+                      });
+                    })
+                    .catch((error) => {
+                      toast({
+                        title: "Erro ao salvar configuração",
+                        description: "Não foi possível salvar a configuração.",
+                        variant: "destructive",
+                      });
+                    });
+                  }}
+                >
+                  <Save className="h-4 w-4 mr-2" />
+                  Salvar Configuração
+                </Button>
+              </div>
+            </CardFooter>

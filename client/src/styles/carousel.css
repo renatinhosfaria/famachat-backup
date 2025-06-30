@@ -1,0 +1,54 @@
+/* Estilos para o carrossel em tela cheia */
+.fullscreen-carousel .carousel .slide {
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fullscreen-carousel .carousel .thumbs-wrapper {
+  margin: 10px 0;
+}
+
+.fullscreen-carousel .carousel .thumb {
+  border: 2px solid transparent;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: all 0.3s;
+  opacity: 0.6;
+  height: 70px;
+}
+
+.fullscreen-carousel .carousel .thumb.selected,
+.fullscreen-carousel .carousel .thumb:hover {
+  border-color: white;
+  opacity: 1;
+}
+
+.fullscreen-carousel .carousel .thumbs {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+.fullscreen-carousel .carousel .thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  vertical-align: middle;
+}
+
+.fullscreen-carousel .carousel .control-prev.control-arrow:before,
+.fullscreen-carousel .carousel .control-next.control-arrow:before {
+  border-width: 15px;
+}
+
+.fullscreen-carousel .carousel .control-prev.control-arrow {
+  left: 20px;
+}
+
+.fullscreen-carousel .carousel .control-next.control-arrow {
+  right: 20px;
+}
